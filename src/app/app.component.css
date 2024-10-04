@@ -1,0 +1,98 @@
+/* Estilos gerais */
+.shopping-list-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+form {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.input-item {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+.list-section {
+  margin-top: 20px;
+}
+
+h3 {
+  color: #333;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Estilos para itens */
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+/* Estilos para itens não comprados */
+.not-purchased {
+  background-color: #f2f2f2;
+}
+
+/* Estilos para itens comprados */
+.purchased {
+  background-color: #d4edda;
+}
+
+/* Risca apenas o texto dos itens comprados */
+.purchased span {
+  text-decoration: line-through; /* Risca apenas o texto */
+  color: #6c757d; /* Cor de texto mais escura para itens comprados */
+}
+
+span {
+  flex: 1;
+  padding: 0 10px;
+}
+
+button {
+  margin-left: 10px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
