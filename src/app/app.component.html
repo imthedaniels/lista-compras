@@ -5,7 +5,7 @@
     <input
       type="text"
       formControlName="itemName"
-      placeholder="Adicione um item"
+      placeholder="Adicione um item a prateleira"
       class="input-item"
     />
     <button type="submit" [disabled]="itemForm.invalid">
@@ -14,7 +14,7 @@
   </form>
 
   <div class="list-section">
-    <h3>Itens Não Comprados</h3>
+    <h3>Prateleira</h3>
     <ul>
       <li *ngFor="let item of itensNaoComprados" class="not-purchased">
         <span>{{ item.nome }}</span>
@@ -24,7 +24,7 @@
       </li>
     </ul>
 
-    <h3>Itens Comprados</h3>
+    <h3>Carrinho</h3>
     <ul>
       <li *ngFor="let item of itensComprados" class="purchased">
         <span>{{ item.nome }}</span>
