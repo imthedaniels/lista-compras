@@ -1,0 +1,22 @@
+{
+  "shopping-list": [
+    {
+      "id": 1,
+      "title": "Batata",
+      "userId": "116906965006085702086",
+      "included": false
+    },
+    {
+      "id": 2,
+      "title": "Feijao",
+      "userId": "116906965006085702086",
+      "included": true
+    },
+    {
+      "id": 3,
+      "title": "Feijao",
+      "userId": "126906965006085702086",
+      "included": true
+    }
+  ]
+}

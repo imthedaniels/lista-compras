@@ -1,75 +1,119 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ShoppingListService } from './shopping-list.service';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 interface Item {
+  id?: number;
   nome: string;
   comprado: boolean;
+  userId: string; // Para identificar o dono do item
 }
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, ReactiveFormsModule, CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  items: Item[] = [
-    { nome: 'Maçã', comprado: false },
-    { nome: 'Banana', comprado: true },
-  ];
-
+export class AppComponent implements OnInit {
+  items: Item[] = [];
   itemForm: FormGroup;
-  editingItem: Item | null = null; // Adiciona a propriedade para armazenar o item em edição
+  editingItem: Item | null = null;
+  user: SocialUser | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private shoppingListService: ShoppingListService,
+    private authService: SocialAuthService
+  ) {
     this.itemForm = this.fb.group({
       itemName: ['', Validators.required],
     });
   }
 
-  get itensNaoComprados() {
-    return this.items.filter((item) => !item.comprado);
+  ngOnInit(): void {
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+      if (this.user) {
+        this.loadItems();
+      }
+    });
   }
-
-  get itensComprados() {
-    return this.items.filter((item) => item.comprado);
+  loadItems(): void {
+    if (this.user) {
+      this.shoppingListService.getItems(this.user.id).subscribe((items) => {
+        console.log('Items carregados:', items);
+        this.items = items.map((item) => ({
+          id: item.id,
+          nome: item.title,
+          comprado: item.included,
+          userId: item.userId,
+        }));
+      });
+    }
   }
 
   addItem() {
-    if (this.itemForm.valid) {
+    if (this.itemForm.valid && this.user) {
       const itemName = this.itemForm.get('itemName')?.value;
 
       if (this.editingItem) {
-        // Se um item está sendo editado, atualiza seu nome
         this.editingItem.nome = itemName;
-        this.editingItem = null; // Limpa a edição
+        this.shoppingListService
+          .updateItem({
+            id: this.editingItem.id!,
+            title: itemName,
+            included: this.editingItem.comprado,
+            userId: this.user.id,
+          })
+          .subscribe(() => {
+            this.editingItem = null;
+          });
       } else {
-        // Caso contrário, adiciona um novo item
-        this.items.push({ nome: itemName, comprado: false });
+        const newItem = {
+          id: Math.random(),
+          title: itemName,
+          included: false,
+          userId: this.user.id,
+        };
+        this.shoppingListService.addItem(newItem).subscribe((item) => {
+          this.items.push({
+            id: item.id,
+            nome: item.title,
+            comprado: item.included,
+            userId: item.userId,
+          });
+        });
       }
 
       this.itemForm.reset();
     }
   }
 
-  startEditing(item: Item) {
-    this.editingItem = item; // Define o item a ser editado
-    this.itemForm.setValue({ itemName: item.nome }); // Preenche o campo de texto com o nome do item
+  toggleItem(item: Item) {
+    if (item.id) {
+      item.comprado = !item.comprado;
+      this.shoppingListService
+        .updateItem({
+          id: item.id,
+          title: item.nome,
+          included: item.comprado,
+          userId: item.userId,
+        })
+        .subscribe();
+    }
   }
 
-  toggleItem(item: Item) {
-    item.comprado = !item.comprado;
+  startEditing(item: Item) {
+    this.editingItem = item;
+    this.itemForm.setValue({ itemName: item.nome });
   }
 
   removeItem(item: Item) {
-    this.items = this.items.filter((i) => i !== item);
+    if (item.id) {
+      this.shoppingListService.deleteItem(item.id).subscribe(() => {
+        this.items = this.items.filter((i) => i.id !== item.id);
+      });
+    }
   }
 }

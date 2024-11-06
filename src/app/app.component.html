@@ -5,7 +5,7 @@
     <input
       type="text"
       formControlName="itemName"
-      placeholder="Adicione um item a prateleira"
+      placeholder="Adicione um item à prateleira"
       class="input-item"
     />
     <button type="submit" [disabled]="itemForm.invalid">
@@ -16,22 +16,26 @@
   <div class="list-section">
     <h3>Prateleira</h3>
     <ul>
-      <li *ngFor="let item of itensNaoComprados" class="not-purchased">
-        <span>{{ item.nome }}</span>
-        <button (click)="toggleItem(item)">✔</button>
-        <button (click)="startEditing(item)">✏️</button>
-        <button (click)="removeItem(item)">🗑️</button>
-      </li>
+      <ng-container *ngFor="let item of items">
+        <li *ngIf="!item.comprado" class="not-purchased">
+          <span>{{ item.nome }}</span>
+          <button (click)="toggleItem(item)">✔ Adicionar ao Carrinho</button>
+          <button (click)="startEditing(item)">✏️ Editar</button>
+          <button (click)="removeItem(item)">🗑️ Excluir</button>
+        </li>
+      </ng-container>
     </ul>
 
     <h3>Carrinho</h3>
     <ul>
-      <li *ngFor="let item of itensComprados" class="purchased">
-        <span>{{ item.nome }}</span>
-        <button (click)="toggleItem(item)">↩</button>
-        <button (click)="startEditing(item)">✏️</button>
-        <button (click)="removeItem(item)">🗑️</button>
-      </li>
+      <ng-container *ngFor="let item of items">
+        <li *ngIf="item.comprado" class="purchased">
+          <span>{{ item.nome }}</span>
+          <button (click)="toggleItem(item)">↩ Remover da Prateleira</button>
+          <button (click)="startEditing(item)">✏️ Editar</button>
+          <button (click)="removeItem(item)">🗑️ Excluir</button>
+        </li>
+      </ng-container>
     </ul>
   </div>
 </div>
