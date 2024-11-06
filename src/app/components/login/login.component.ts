@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ShoppingListService } from './shopping-list.service';
 
 @Component({
   selector: 'app-login',

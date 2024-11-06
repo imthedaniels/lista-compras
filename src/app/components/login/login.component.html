@@ -1,0 +1,23 @@
+<div class="login-container">
+  <!-- Cabeçalho de boas-vindas -->
+  <h6>Bem-vindo a Lista de Compras</h6>
+  <p>Faça login para acessar sua conta</p>
+
+  <!-- Botão de login com Google -->
+  <asl-google-signin-button
+    type="standard"
+    size="large"
+    shape="rectangular"
+    text="signin_with"
+    theme="outline"
+    logo_alignment="left"
+  >
+  </asl-google-signin-button>
+
+  <!-- Exibição de usuário logado -->
+  <div *ngIf="loggedIn" class="user-info">
+    <img [src]="user?.photoUrl" referrerpolicy="no-referrer" />
+    <h4>{{ user?.name }}</h4>
+    <p>{{ user?.email }}</p>
+  </div>
+</div>

@@ -1,26 +1,24 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
   GoogleLoginProvider,
   GoogleSigninButtonModule,
+  SocialAuthServiceConfig,
+  SocialLoginModule,
 } from '@abacritt/angularx-social-login';
-import { FacebookLoginProvider } from '@abacritt/angularx-social-login';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login.component';
-import { PageNotFoundComponent } from './page-not-found.component';
-import { AuthGuard } from './auth.guard';
-import { routes } from './app.routes';
 import { HttpClientModule } from '@angular/common/http';
+import { routes } from './app.routes';
+import { LoginComponent } from './components/login/login.component';
+import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
 import { MainComponent } from './main.component';
+import { PageNotFoundComponent } from './page-not-found.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    ShoppingListComponent,
     LoginComponent,
     PageNotFoundComponent,
     MainComponent,
@@ -49,6 +47,6 @@ import { MainComponent } from './main.component';
       } as SocialAuthServiceConfig,
     },
   ],
-  bootstrap: [MainComponent], // Apenas o AppComponent deve ser o bootstrap
+  bootstrap: [MainComponent], // Apenas o MainComponent deve ser o bootstrap
 })
 export class AppModule {}

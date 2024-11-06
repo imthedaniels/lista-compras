@@ -11,11 +11,11 @@ interface Item {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: 'shopping-list',
+  templateUrl: './shopping-list.component.html',
+  styleUrls: ['./shopping-list.component.css'],
 })
-export class AppComponent implements OnInit {
+export class ShoppingListComponent implements OnInit {
   items: Item[] = [];
   itemForm: FormGroup;
   editingItem: Item | null = null;
