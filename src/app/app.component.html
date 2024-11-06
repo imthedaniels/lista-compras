@@ -31,7 +31,7 @@
       <ng-container *ngFor="let item of items">
         <li *ngIf="item.comprado" class="purchased">
           <span>{{ item.nome }}</span>
-          <button (click)="toggleItem(item)">↩ Remover da Prateleira</button>
+          <button (click)="toggleItem(item)">↩ Remover do carrinho</button>
           <button (click)="startEditing(item)">✏️ Editar</button>
           <button (click)="removeItem(item)">🗑️ Excluir</button>
         </li>
