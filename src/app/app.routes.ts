@@ -12,5 +12,5 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redireciona para o login por padrão
-  { path: '**', component: PageNotFoundComponent },
+  { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];

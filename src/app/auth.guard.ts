@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
-import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, take, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +12,20 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.authService.authState.pipe(
-      take(1), // Garante que a autenticação seja verificada apenas uma vez
+      take(1),
       map((user) => {
-        console.log('AuthGuard - User:', user); // Para verificar o estado do usuário
+        console.log('AuthGuard - User:', user);
         if (user) {
           return true;
         } else {
           this.router.navigate(['login']);
           return false;
         }
+      }),
+      catchError((error) => {
+        console.error('Erro ao verificar autenticação:', error);
+        this.router.navigate(['login']);
+        return of(false);
       })
     );
   }

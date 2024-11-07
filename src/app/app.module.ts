@@ -15,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
 import { MainComponent } from './main.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
     SocialLoginModule,
     HttpClientModule,
     GoogleSigninButtonModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     {
